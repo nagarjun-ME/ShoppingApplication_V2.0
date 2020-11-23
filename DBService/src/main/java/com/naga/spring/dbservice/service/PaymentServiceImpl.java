@@ -1,5 +1,6 @@
 package com.naga.spring.dbservice.service;
 
+import com.naga.spring.dbservice.dto.PaymentDTO;
 import com.naga.spring.dbservice.exception.ProductNotFoundException;
 import com.naga.spring.dbservice.jparepository.PaymentRepository;
 import com.naga.spring.dbservice.model.Payment;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,7 +23,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment createPayment(Payment payment) {
-        return this.paymentRepository.save(payment);
+        return paymentRepository.save(payment);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public void deletePayment(long id) {
 
-        log.info("Deleted Item" +id);
+        log.info("Deleted Item : {} in DB ", id);
         this.paymentRepository.deleteById(id);
 
     }

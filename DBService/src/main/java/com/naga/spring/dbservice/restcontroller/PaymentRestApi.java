@@ -1,7 +1,8 @@
 package com.naga.spring.dbservice.restcontroller;
 
+import com.naga.spring.dbservice.converter.PaymentDTOConverter;
+import com.naga.spring.dbservice.dto.PaymentDTO;
 import com.naga.spring.dbservice.model.Payment;
-import com.naga.spring.dbservice.model.Product;
 import com.naga.spring.dbservice.service.PaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,41 +17,48 @@ import java.util.List;
 @RequestMapping("/db/pay")
 public class PaymentRestApi {
 
-    private final Logger log= LoggerFactory.getLogger(this.getClass());
+    private Logger log= LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private PaymentDTOConverter paymentDTOConverter;
 
     @Autowired
     private PaymentService paymentService;
 
-    @RequestMapping("/all")
+    @GetMapping("/all")
     public ResponseEntity<List<Payment>> readAllPayments()
     {
         log.info("Get all payments ");
         return ResponseEntity.ok().body(paymentService.getAllPayments());
     }
 
-    @RequestMapping(value="/{pId}", method = RequestMethod.GET)
+    @GetMapping("/{pId}")
     public ResponseEntity<Payment> getPaymentById(@PathVariable("pId") long id)
     {
-        log.info(" Finding payment with id :" + id);
+        log.info(" Finding payment with id :{}" ,id);
+
         return ResponseEntity.ok().body(paymentService.getPaymentById(id));
     }
 
     @PostMapping("/add")
-    public ResponseEntity < Payment> createPayment(@RequestBody Payment payment) {
-        log.info(" Save payment with :" + payment);
-        return ResponseEntity.ok().body(paymentService.createPayment(payment));
+    public ResponseEntity < PaymentDTO> createPayment(@RequestBody PaymentDTO payment) {
+        log.info(" Save payment with : {}" , payment);
+
+        Payment payment1= paymentDTOConverter.convertDtoToEntity(payment);
+
+        return ResponseEntity.ok().body(paymentDTOConverter.convertEntityToDto(paymentService.createPayment(payment1)));
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity < Payment > updatePayment(@PathVariable long id, @RequestBody Payment payment) {
-        payment.setPaymentId(id);
-        log.info(" updating payment with id :" + id);
-        return ResponseEntity.ok().body(paymentService.updatePayment(payment));
+    public ResponseEntity < PaymentDTO > updatePayment(@PathVariable long id, @RequestBody PaymentDTO paymentDto) {
+        paymentDto.setPaymentId(id);
+        log.info(" updating payment with id : {}", id);
+        return ResponseEntity.ok().body(paymentDTOConverter.convertEntityToDto(paymentService.updatePayment(paymentDTOConverter.convertDtoToEntity(paymentDto))));
     }
 
     @DeleteMapping("/rmv/{id}")
     public HttpStatus deletePayment(@PathVariable long id) {
-        log.info(" Deleting the payment with id :" + id);
+        log.info(" Deleting the payment with id : {}", id);
         paymentService.deletePayment(id);
         return HttpStatus.OK;
     }

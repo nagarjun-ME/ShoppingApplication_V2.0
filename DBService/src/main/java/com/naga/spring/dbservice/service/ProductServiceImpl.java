@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product createProduct(Product product) {
-        log.info("Saved the product in data base" + product);
+        log.info("Saved the product in data base : {}", product);
         return productRepository.save(product);
     }
 
@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product getProductById(long productId) {
 
-        log.info("Getting the product data with Product id : " + productId);
+        log.info("Getting the product data with Product id : {} ",  productId);
        Optional <Product> product=this.productRepository.findById(productId);
        if(product.isPresent()){
            return product.get();

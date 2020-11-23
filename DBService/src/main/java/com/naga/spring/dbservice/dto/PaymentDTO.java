@@ -1,29 +1,22 @@
-package com.naga.spring.dbservice.model;
+package com.naga.spring.dbservice.dto;
 
+import lombok.*;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "payments")
-public class Payment implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PaymentDTO {
+
     private long paymentId;
-
     private String description;
     private double amount;
     private Date paymentDate;
     private String itemId;
 
-    public Payment() {
-
+    public PaymentDTO() {
     }
 
-
-    public Payment(long paymentId, String description, double amount, Date paymentDate, String itemId) {
+    public PaymentDTO(long paymentId, String description, double amount, Date paymentDate, String itemId) {
         this.paymentId = paymentId;
         this.description = description;
         this.amount = amount;

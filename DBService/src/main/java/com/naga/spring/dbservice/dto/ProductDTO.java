@@ -1,33 +1,17 @@
-package com.naga.spring.dbservice.model;
+package com.naga.spring.dbservice.dto;
 
-import javax.persistence.*;
+public class ProductDTO {
 
-@Entity
-@Table(name="products")
-public class Product {
-
-    @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    //@SequenceGenerator(name = "sequenceGenerator")
     private long productId;
-
-    @Column(name ="productName")
     private String productName;
-
-    @Column(name = "productDescription")
     private String productDescription;
-
-    @Column(name = "productPrice")
     private double productPrice;
 
-    public Product( ){
-
+    public ProductDTO() {
     }
 
-    public Product(String productName, String productDescription, double productPrice) {
-
+    public ProductDTO(long productId, String productName, String productDescription, double productPrice) {
+        this.productId = productId;
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
