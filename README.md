@@ -1,4 +1,5 @@
-﻿# MicroService Communication
+﻿# ShoppingApplication_V2.0
+## MicroService Communication
 
 
 
@@ -32,6 +33,16 @@ There are five Micro-Services :
     • Service Discovery and Management
     • Docker Container
     • Netflix Eureka Client
+----------------------------------------------------------------------------------
+
+### Technology Stack
+
+##### SpringBoot, Spring Cloud, JDBC, JUnit, JPA
+##### WebClient, RestTemplate
+##### Docker
+##### SonarCube
+##### Spring Eureka, Hystrix
+    
 
 
 
@@ -51,4 +62,4 @@ There are five Micro-Services :
 
 ### [Docker Image here](https://hub.docker.com/repository/docker/nagarjunmqdev/ibmmqtest)
 
-# ShoppingApplication_V2.0
+
