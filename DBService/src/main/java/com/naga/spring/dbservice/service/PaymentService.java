@@ -1,6 +1,7 @@
 package com.naga.spring.dbservice.service;
 
 import com.naga.spring.dbservice.model.Payment;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface PaymentService {
 
     Payment getPaymentById(long paymentId);
 
-    void deletePayment(long id);
+    HttpStatus deletePayment(long id);
 }

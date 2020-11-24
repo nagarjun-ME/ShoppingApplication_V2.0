@@ -6,10 +6,12 @@ import com.naga.spring.dbservice.model.Payment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,9 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment updatePayment(Payment payment) {
 
-        Payment payment1 = this.paymentRepository.findById(payment.getPaymentId()).orElseThrow(
-                () -> new ProductNotFoundException("Transaction is not found in database")
-        );
+        Payment payment1 = getPaymentByPaymentId(payment.getPaymentId());
 
 
         payment1.setPaymentId(payment.getPaymentId());
@@ -50,15 +50,29 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment getPaymentById(long paymentId) {
 
-        return this.paymentRepository.findById(paymentId).orElseThrow(
-                () -> new ProductNotFoundException("Payment is not available" + paymentId));
+        return getPaymentByPaymentId(paymentId);
     }
 
     @Override
-    public void deletePayment(long id) {
+    public HttpStatus deletePayment(long id) {
 
-        log.info("Deleted Item : {} in DB ", id);
-        this.paymentRepository.deleteById(id);
+        log.info("Deleting Item : {} in DB ", id);
+        Payment payment1 = getPaymentByPaymentId(id);
+        if (payment1 == null) {
+            log.info("Oops!! Item : {} not found in DB ", id);
+            return HttpStatus.NOT_FOUND;
+        } else {
+            log.info("Item : {} found in DB. Deleting item.{}. ", id, payment1);
+            this.paymentRepository.deleteById(id);
+            return HttpStatus.ACCEPTED;
+        }
+
+
+    }
+
+    private Payment getPaymentByPaymentId(long id) {
+        Optional<Payment> p=this.paymentRepository.findById(id);
+        if(p.isPresent()){return p.get();} else {return null;}
 
     }
 }

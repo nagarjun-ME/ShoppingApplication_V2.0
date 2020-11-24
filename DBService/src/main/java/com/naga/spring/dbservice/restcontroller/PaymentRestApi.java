@@ -59,8 +59,8 @@ public class PaymentRestApi {
     @DeleteMapping("/rmv/{id}")
     public HttpStatus deletePayment(@PathVariable long id) {
         log.info(" Deleting the payment with id : {}", id);
-        paymentService.deletePayment(id);
-        return HttpStatus.OK;
+
+        return paymentService.deletePayment(id);
     }
 
 }
