@@ -1,16 +1,15 @@
-package com.naga.spring.paymentservice.model;
+package com.naga.spring.paymentservice.dto;
 
-
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Builder
-public class Payment{
+public class PaymentDTO {
 
     private long paymentId;
 
@@ -18,5 +17,4 @@ public class Payment{
     private double amount;
     private Date paymentDate;
     private String itemId;
-
-   }
+}
