@@ -3,8 +3,9 @@ package com.naga.spring.dbservice;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
 @SpringBootTest
-class DbServiceApplicationTests {
+public  class DbServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
