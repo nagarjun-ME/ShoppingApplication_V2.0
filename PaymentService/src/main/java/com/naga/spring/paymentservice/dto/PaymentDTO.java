@@ -13,7 +13,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class PaymentDTO {
 
-    private long paymentId;
     private String description;
     private double amount;
     private Date paymentDate;

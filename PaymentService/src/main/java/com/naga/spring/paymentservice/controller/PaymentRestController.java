@@ -8,12 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -64,5 +63,19 @@ public class PaymentRestController {
         return ResponseEntity.ok().body(paymentResponse.getBody());
     }
 
+    @PostMapping("/add")
+    public Mono<Payment> savePayment(@RequestBody Payment payment) {
+
+        Mono<Payment> pay=WebClient.create(dbBaseUrl)
+                .post()
+                .uri("/add")
+                .body(Mono.just(payment),Payment.class)
+                .retrieve()
+                .bodyToMono(Payment.class);
+
+
+        log.info("Saving  payments : {}", pay);
+        return  pay;
+    }
 
 }
