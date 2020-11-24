@@ -24,7 +24,7 @@ public class PaymentDTOConverter {
     public List <PaymentDTO> convertEntityToDtoList(List<Payment> paymentList)
     {
 
-        return paymentList.stream().map(pay -> convertEntityToDto(pay)).collect(Collectors.toList());
+        return paymentList.stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
     public Payment convertDtoToEntity(PaymentDTO paymentDTO)
@@ -40,6 +40,6 @@ public class PaymentDTOConverter {
 
     public List<Payment> convertDtoToEntityList(List<PaymentDTO> paymentDTOList)
     {
-        return paymentDTOList.stream().map( dto -> convertDtoToEntity(dto)).collect(Collectors.toList());
+        return paymentDTOList.stream().map( this::convertDtoToEntity).collect(Collectors.toList());
     }
 }

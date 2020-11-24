@@ -64,7 +64,7 @@ class PaymentRestApiTest {
     }
 
     @Test
-    public void readAllPaymentsTest() throws Exception {
+    void readAllPaymentsTest() throws Exception {
         // given
         PaymentDTO paymentDTO=PaymentDTO.builder()
                 .paymentId(1)
