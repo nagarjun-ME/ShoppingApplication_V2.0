@@ -1,6 +1,5 @@
 package com.naga.spring.dbservice.service;
 
-import com.naga.spring.dbservice.dto.PaymentDTO;
 import com.naga.spring.dbservice.exception.ProductNotFoundException;
 import com.naga.spring.dbservice.jparepository.PaymentRepository;
 import com.naga.spring.dbservice.model.Payment;
@@ -16,7 +15,7 @@ import java.util.List;
 @Transactional
 public class PaymentServiceImpl implements PaymentService {
 
-    private final Logger log= LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private PaymentRepository paymentRepository;
@@ -29,17 +28,17 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment updatePayment(Payment payment) {
 
-        Payment payment1=this.paymentRepository.findById(payment.getPaymentId()).orElseThrow(
-                ()-> new ProductNotFoundException("Transaction is not found in database" )
+        Payment payment1 = this.paymentRepository.findById(payment.getPaymentId()).orElseThrow(
+                () -> new ProductNotFoundException("Transaction is not found in database")
         );
 
 
-       payment1.setPaymentId(payment.getPaymentId());
-                payment1.setDescription(payment.getDescription());
-                payment1.setAmount(payment.getAmount());
-                payment1.setPaymentDate(payment.getPaymentDate());
-                payment1.setItemId(payment.getItemId());
-                this.paymentRepository.save(payment1);
+        payment1.setPaymentId(payment.getPaymentId());
+        payment1.setDescription(payment.getDescription());
+        payment1.setAmount(payment.getAmount());
+        payment1.setPaymentDate(payment.getPaymentDate());
+        payment1.setItemId(payment.getItemId());
+        this.paymentRepository.save(payment1);
         return payment1;
     }
 
@@ -50,8 +49,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment getPaymentById(long paymentId) {
-        Payment pay1=this.paymentRepository.findById(paymentId).orElseThrow(
-                ()->new ProductNotFoundException("Payment is not available" +paymentId)
+        Payment pay1 = this.paymentRepository.findById(paymentId).orElseThrow(
+                () -> new ProductNotFoundException("Payment is not available" + paymentId)
         );
         return pay1;
     }

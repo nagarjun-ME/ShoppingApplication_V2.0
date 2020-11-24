@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 @Component
 public class ProductDtoConverter {
 
-    public ProductDTO convertToDto(Product product){
+    public ProductDTO convertToDto(Product product) {
 
-        ProductDTO dto=new ProductDTO();
+        ProductDTO dto = new ProductDTO();
         dto.setProductId(product.getProductId());
         dto.setProductDescription(product.getProductDescription());
         dto.setProductName(product.getProductName());
@@ -22,14 +22,14 @@ public class ProductDtoConverter {
 
     }
 
-    public List<ProductDTO> convertToDto(List<Product> productList){
-        return  productList.stream().map( product -> convertToDto(product)).collect(Collectors.toList());
+    public List<ProductDTO> convertToDto(List<Product> productList) {
+        return productList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
 
-    public Product convertToEntity(ProductDTO product){
+    public Product convertToEntity(ProductDTO product) {
 
-        Product dto=new Product();
+        Product dto = new Product();
         dto.setProductId(product.getProductId());
         dto.setProductDescription(product.getProductDescription());
         dto.setProductName(product.getProductName());
@@ -39,8 +39,8 @@ public class ProductDtoConverter {
 
     }
 
-    public List<Product> convertToEntity(List<ProductDTO> productDtoList){
-     return  productDtoList.stream().map(dto -> convertToEntity(dto)).collect(Collectors.toList());
+    public List<Product> convertToEntity(List<ProductDTO> productDtoList) {
+        return productDtoList.stream().map(this::convertToEntity).collect(Collectors.toList());
     }
 
 }

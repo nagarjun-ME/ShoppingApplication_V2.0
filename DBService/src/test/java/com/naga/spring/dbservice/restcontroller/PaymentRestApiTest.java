@@ -38,14 +38,14 @@ class PaymentRestApiTest {
     private MockMvc mockMvc;
 
 
-    private final  String baseUrl="/db/pay/";
+    private final String baseUrl = "/db/pay/";
+
     @Test
-   void  getPaymentByIdTest() throws Exception
-    {
+    void getPaymentByIdTest() throws Exception {
         //given
         //PaymentDTO paymentDTO=new PaymentDTO(2, "Movie Shopping", 2.12, new Date(), "MV002");
 
-        PaymentDTO paymentDTO=PaymentDTO.builder()
+        PaymentDTO paymentDTO = PaymentDTO.builder()
                 .paymentId(1)
                 .description("Movie Shopping")
                 .amount(2.12)
@@ -57,16 +57,16 @@ class PaymentRestApiTest {
         doReturn(paymentDTO).when(converter).convertEntityToDto(any(Payment.class));
 
         // when + then
-        this.mockMvc.perform(get(baseUrl+"/2"))
+        this.mockMvc.perform(get(baseUrl + "/2"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.amount",is(paymentDTO.getAmount())));
+                .andExpect(jsonPath("$.amount", is(paymentDTO.getAmount())));
 
     }
 
     @Test
     void readAllPaymentsTest() throws Exception {
         // given
-        PaymentDTO paymentDTO=PaymentDTO.builder()
+        PaymentDTO paymentDTO = PaymentDTO.builder()
                 .paymentId(1)
                 .description("Movie Shopping")
                 .amount(2.12)
@@ -79,7 +79,7 @@ class PaymentRestApiTest {
         doReturn(paymentDTOS).when(converter).convertEntityToDtoList(any());
 
         // when + then
-        this.mockMvc.perform(get(baseUrl+"/all"))
+        this.mockMvc.perform(get(baseUrl + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].itemId", is(paymentDTO.getItemId())));
     }

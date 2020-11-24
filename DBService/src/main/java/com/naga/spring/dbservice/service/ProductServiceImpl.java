@@ -14,9 +14,9 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
-    private final Logger log= LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private ProductRepository productRepository;
@@ -29,11 +29,10 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product updateProduct(Product product) {
-        Optional <Product> prod=this.productRepository.findById(product.getProductId());
+        Optional<Product> prod = this.productRepository.findById(product.getProductId());
 
-        if (prod.isPresent())
-        {
-            Product updatedProduct=prod.get();
+        if (prod.isPresent()) {
+            Product updatedProduct = prod.get();
             updatedProduct.setProductId(product.getProductId());
             updatedProduct.setProductName(product.getProductName());
             updatedProduct.setProductDescription(product.getProductDescription());
@@ -58,22 +57,22 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product getProductById(long productId) {
 
-        log.info("Getting the product data with Product id : {} ",  productId);
-       Optional <Product> product=this.productRepository.findById(productId);
-       if(product.isPresent()){
-           return product.get();
-       } else  {
+        log.info("Getting the product data with Product id : {} ", productId);
+        Optional<Product> product = this.productRepository.findById(productId);
+        if (product.isPresent()) {
+            return product.get();
+        } else {
 
-           log.error("Something went wrong or product is not available.");
-           throw new ProductNotFoundException("Product with ID : "+ productId +" not found. ");
-       }
+            log.error("Something went wrong or product is not available.");
+            throw new ProductNotFoundException("Product with ID : " + productId + " not found. ");
+        }
 
     }
 
     @Override
     public void deleteProduct(long id) {
 
-        Optional < Product > productDb = this.productRepository.findById(id);
+        Optional<Product> productDb = this.productRepository.findById(id);
 
         if (productDb.isPresent()) {
             this.productRepository.delete(productDb.get());

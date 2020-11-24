@@ -10,9 +10,8 @@ import java.util.stream.Collectors;
 @Component
 public class PaymentDTOConverter {
 
-    public PaymentDTO convertEntityToDto(Payment payment)
-    {
-        PaymentDTO dto=new PaymentDTO();
+    public PaymentDTO convertEntityToDto(Payment payment) {
+        PaymentDTO dto = new PaymentDTO();
         dto.setPaymentId(payment.getPaymentId());
         dto.setDescription(payment.getDescription());
         dto.setAmount(payment.getAmount());
@@ -21,15 +20,13 @@ public class PaymentDTOConverter {
         return dto;
     }
 
-    public List <PaymentDTO> convertEntityToDtoList(List<Payment> paymentList)
-    {
+    public List<PaymentDTO> convertEntityToDtoList(List<Payment> paymentList) {
 
         return paymentList.stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
-    public Payment convertDtoToEntity(PaymentDTO paymentDTO)
-    {
-        Payment pojo=new Payment();
+    public Payment convertDtoToEntity(PaymentDTO paymentDTO) {
+        Payment pojo = new Payment();
         pojo.setPaymentId(paymentDTO.getPaymentId());
         pojo.setDescription(paymentDTO.getDescription());
         pojo.setAmount(paymentDTO.getAmount());
@@ -38,8 +35,7 @@ public class PaymentDTOConverter {
         return pojo;
     }
 
-    public List<Payment> convertDtoToEntityList(List<PaymentDTO> paymentDTOList)
-    {
-        return paymentDTOList.stream().map( this::convertDtoToEntity).collect(Collectors.toList());
+    public List<Payment> convertDtoToEntityList(List<PaymentDTO> paymentDTOList) {
+        return paymentDTOList.stream().map(this::convertDtoToEntity).collect(Collectors.toList());
     }
 }
