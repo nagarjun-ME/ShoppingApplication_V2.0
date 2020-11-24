@@ -12,19 +12,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(PaymentRestApi.class)
-public class PaymentRestApiTest {
+class PaymentRestApiTest {
 
     @MockBean
     private PaymentService paymentService;
@@ -37,14 +39,21 @@ public class PaymentRestApiTest {
 
 
     private final  String baseUrl="/db/pay/";
-
     @Test
-    public void  getPaymentByIdTest() throws Exception
+   void  getPaymentByIdTest() throws Exception
     {
         //given
-        PaymentDTO paymentDTO=new PaymentDTO(2, "Movie Shopping", 2.12, new Date(), "MV002");
+        //PaymentDTO paymentDTO=new PaymentDTO(2, "Movie Shopping", 2.12, new Date(), "MV002");
 
-        doReturn(Optional.of(new Payment())).when(paymentService).getPaymentById(2);
+        PaymentDTO paymentDTO=PaymentDTO.builder()
+                .paymentId(1)
+                .description("Movie Shopping")
+                .amount(2.12)
+                .paymentDate(new Date())
+                .itemId("MV002")
+                .build();
+
+        doReturn(new Payment()).when(paymentService).getPaymentById(2);
         doReturn(paymentDTO).when(converter).convertEntityToDto(any(Payment.class));
 
         // when + then
@@ -53,4 +62,26 @@ public class PaymentRestApiTest {
                 .andExpect(jsonPath("$.amount",is(paymentDTO.getAmount())));
 
     }
+
+    @Test
+    public void readAllPaymentsTest() throws Exception {
+        // given
+        PaymentDTO paymentDTO=PaymentDTO.builder()
+                .paymentId(1)
+                .description("Movie Shopping")
+                .amount(2.12)
+                .paymentDate(new Date())
+                .itemId("MV002")
+                .build();
+        List<PaymentDTO> paymentDTOS = Arrays.asList(paymentDTO);
+
+        doReturn(new ArrayList<>()).when(paymentService).getAllPayments();
+        doReturn(paymentDTOS).when(converter).convertEntityToDtoList(any());
+
+        // when + then
+        this.mockMvc.perform(get(baseUrl+"/all"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].itemId", is(paymentDTO.getItemId())));
+    }
+
 }

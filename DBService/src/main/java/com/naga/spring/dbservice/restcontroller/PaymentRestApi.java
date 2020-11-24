@@ -26,18 +26,18 @@ public class PaymentRestApi {
     private PaymentService paymentService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Payment>> readAllPayments()
+    public ResponseEntity<List<PaymentDTO>> readAllPayments()
     {
         log.info("Get all payments ");
-        return ResponseEntity.ok().body(paymentService.getAllPayments());
+        return ResponseEntity.ok().body(paymentDTOConverter.convertEntityToDtoList(paymentService.getAllPayments()));
     }
 
     @GetMapping("/{pId}")
-    public ResponseEntity<Payment> getPaymentById(@PathVariable("pId") long id)
+    public ResponseEntity<PaymentDTO> getPaymentById(@PathVariable("pId") long id)
     {
         log.info(" Finding payment with id :{}" ,id);
 
-        return ResponseEntity.ok().body(paymentService.getPaymentById(id));
+        return ResponseEntity.ok().body(paymentDTOConverter.convertEntityToDto(paymentService.getPaymentById(id)));
     }
 
     @PostMapping("/add")

@@ -4,7 +4,9 @@ import lombok.*;
 
 import java.util.Date;
 
-
+@Data
+@NoArgsConstructor
+@Builder
 public class PaymentDTO {
 
     private long paymentId;
@@ -13,8 +15,6 @@ public class PaymentDTO {
     private Date paymentDate;
     private String itemId;
 
-    public PaymentDTO() {
-    }
 
     public PaymentDTO(long paymentId, String description, double amount, Date paymentDate, String itemId) {
         this.paymentId = paymentId;
@@ -24,43 +24,4 @@ public class PaymentDTO {
         this.itemId = itemId;
     }
 
-    public long getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(long paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public String getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
-    }
 }
