@@ -49,10 +49,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment getPaymentById(long paymentId) {
-        Payment pay1 = this.paymentRepository.findById(paymentId).orElseThrow(
-                () -> new ProductNotFoundException("Payment is not available" + paymentId)
-        );
-        return pay1;
+
+        return this.paymentRepository.findById(paymentId).orElseThrow(
+                () -> new ProductNotFoundException("Payment is not available" + paymentId));
     }
 
     @Override
