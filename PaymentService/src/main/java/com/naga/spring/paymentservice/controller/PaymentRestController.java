@@ -3,7 +3,6 @@ package com.naga.spring.paymentservice.controller;
 import com.naga.spring.paymentservice.dto.PaymentDTO;
 import com.naga.spring.paymentservice.mapper.PaymentMapper;
 import com.naga.spring.paymentservice.model.Payment;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +15,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.time.Duration;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/naga/shop/pay")
 public class PaymentRestController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-
+    @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
     private WebClient.Builder webClientBuilder;
 
 
-    private final PaymentMapper paymentMapper;
+    private PaymentMapper paymentMapper;
 
     @Value("${db.service.url}")
     private String dbBaseUrl;
@@ -48,8 +44,7 @@ public class PaymentRestController {
     public ResponseEntity<PaymentDTO> getItemList(@PathVariable("pId") long pId) {
 
         log.info("Payment details id : {} retrieving", pId);
-
-        return ResponseEntity.ok().body(paymentMapper.toPaymentDTO(restTemplate.getForEntity(dbBaseUrl + pId, Payment.class, 1).getBody()));
+        return ResponseEntity.ok().body(restTemplate.getForEntity(dbBaseUrl + pId, PaymentDTO.class, 1).getBody());
     }
 
 
@@ -57,8 +52,6 @@ public class PaymentRestController {
     public ResponseEntity<List<PaymentDTO>> getAllItems() {
 
         log.info("Retrieving all payments details");
-
-        // ResponseEntity <Payment[] > productResponse=restTemplate.getForEntity("http://shopping-db-service/db/products/all", Payment[].class);
 
         ResponseEntity<List<PaymentDTO>> paymentResponse;
         paymentResponse = webClientBuilder.build()

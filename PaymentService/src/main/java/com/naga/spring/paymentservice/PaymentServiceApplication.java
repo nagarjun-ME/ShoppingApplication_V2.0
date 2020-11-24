@@ -11,7 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
 @EnableEurekaClient
-@ComponentScan("com.naga.spring.paymentservice.controller")
+@ComponentScan(basePackages = {"com.naga.spring.paymentservice.controller","com.naga.spring.paymentservice.mapper"})
 public class PaymentServiceApplication {
 
 
@@ -22,6 +22,7 @@ public class PaymentServiceApplication {
 	@Bean
 	@LoadBalanced
 	public WebClient.Builder getWebClientBuilder(){return  WebClient.builder();}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(PaymentServiceApplication.class, args);
